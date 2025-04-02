@@ -2,6 +2,7 @@ package com.peng.un.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 
 public class Settings {
     private static final String PREFS_NAME = "SmartReaderPrefs";
@@ -9,12 +10,20 @@ public class Settings {
     private static Settings instance;
 
     private Settings(Context context) {
-        preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        // Use the application context to avoid memory leaks
+        preferences = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     public static Settings instance(Context context) {
         if (instance == null) {
-            instance = new Settings(context.getApplicationContext());
+            instance = new Settings(context);
+        }
+        return instance;
+    }
+
+    public static Settings instance() {
+        if (instance == null) {
+            throw new IllegalStateException("Settings instance has not been initialized. Call instance(Context) first.");
         }
         return instance;
     }
@@ -24,6 +33,7 @@ public class Settings {
     }
 
     public String getLastPath() {
-        return preferences.getString("last_path", null);
+        // Use Environment.getExternalStorageDirectory().getPath() instead of hard - coded "/sdcard"
+        return preferences.getString("last_path", Environment.getExternalStorageDirectory().getPath());
     }
-} 
+}
