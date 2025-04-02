@@ -15,14 +15,8 @@ public class PathExplore {
 
     // 私有构造函数
     private PathExplore() {
-        String initialPath = Settings.instance().getLastPath();
-        if (initialPath == null) {
-            initialPath = "/";
-        }
+        String initialPath = "/sdcard";//Settings.instance().getLastPath();
         java.io.File path = new java.io.File(initialPath);
-        if (!path.exists() || !path.isDirectory()) {
-            path = new java.io.File("/");
-        }
         currentFolder = new Data.File(path.getName(), path.getAbsolutePath(), true);
     }
 

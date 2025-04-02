@@ -4,10 +4,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.peng.un.R;
+import com.peng.un.action.PathExplore;
 import com.peng.un.data.Data;
+import com.peng.un.data.Settings;
 
 import java.util.Collections;
 import java.util.List;
@@ -58,16 +62,19 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
             if (data.isFolder()) {
                 java.io.File folderFile = new java.io.File(data.getPath());
                 // 这里需要在 PathActivity 中添加一个方法来处理导航逻辑
-                // if (pathExplore.navigateTo(folderFile)) {
-                //     updateFileList();
-                // } else {
-                //     Toast.makeText(PathActivity.this,
-                //             "无法访问该文件夹", Toast.LENGTH_SHORT).show();
-                // }
+                 if (PathExplore.instance().navigateTo(folderFile)) {
+                     // 获取文件列表
+                     List<Data.File> dataList = PathExplore.instance().listFiles();
+                     // 更新适配器数据
+                     setData(dataList);
+                 } else {
+                     Toast.makeText(Settings.instance().context,
+                             "无法访问该文件夹", Toast.LENGTH_SHORT).show();
+                 }
             } else {
                 // 这里需要传入 PathActivity 的上下文
-                // Toast.makeText(PathActivity.this,
-                //         "文件: " + data.getName(), Toast.LENGTH_SHORT).show();
+                 Toast.makeText(Settings.instance().context,
+                         "文件: " + data.getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }

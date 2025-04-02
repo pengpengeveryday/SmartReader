@@ -7,10 +7,12 @@ import android.os.Environment;
 public class Settings {
     private static final String PREFS_NAME = "SmartReaderPrefs";
     private final SharedPreferences preferences;
+    public final Context context;
     private static Settings instance;
 
     private Settings(Context context) {
         // Use the application context to avoid memory leaks
+        this.context = context.getApplicationContext();
         preferences = context.getApplicationContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
     }
 
