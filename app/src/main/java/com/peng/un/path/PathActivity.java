@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.peng.un.R;
 import com.peng.un.action.PathExplore;
-import com.peng.un.data.DataForm;
+import com.peng.un.data.Data;
+import com.peng.un.utils.ALog;
+
 import java.util.List;
 
 public class PathActivity extends AppCompatActivity {
@@ -26,6 +28,7 @@ public class PathActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_path);
+        ALog.d("PathActivity onCreate");
 
         // 初始化视图组件
         tvCurrentPath = findViewById(R.id.tvCurrentPath);
@@ -88,7 +91,7 @@ public class PathActivity extends AppCompatActivity {
             // 更新当前路径显示
             tvCurrentPath.setText(PathExplore.instance().getCurrentFolder().getPath());
             // 获取文件列表
-            List<DataForm.File> dataList = PathExplore.instance().listFiles();
+            List<Data.File> dataList = PathExplore.instance().listFiles();
             // 更新适配器数据
             adapter.setData(dataList);
         } catch (Exception e) {

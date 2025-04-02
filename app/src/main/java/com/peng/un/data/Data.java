@@ -1,29 +1,24 @@
 package com.peng.un.data;
 
-public class DataForm {
-    // Data types will be defined here
+public class Data {
     public enum Type {
         FILE
     }
 
-    // 添加 Data 类
-    public static class Data {
-        private Type type;
+    private Type type;
 
-        public Data(Type type) {
-            this.type = type;
-        }
-
-        public Type getType() {
-            return type;
-        }
-
-        public void setType(Type type) {
-            this.type = type;
-        }
+    public Data(Type type) {
+        this.type = type;
     }
 
-    // 保留 File 类作为文件和文件夹的共用体
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     public static class File extends Data {
         private String name;
         private String path;
@@ -60,5 +55,4 @@ public class DataForm {
             this.folder = folder;
         }
     }
-    // 去掉 Folder 类
 }

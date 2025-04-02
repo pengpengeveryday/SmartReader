@@ -7,14 +7,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.peng.un.R;
-import com.peng.un.data.DataForm;
+import com.peng.un.data.Data;
+
 import java.util.Collections;
 import java.util.List;
 
 public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder> {
-    private List<DataForm.File> dataList = Collections.emptyList();
+    private List<Data.File> dataList = Collections.emptyList();
 
-    public void setData(List<DataForm.File> dataList) {
+    public void setData(List<Data.File> dataList) {
         this.dataList = dataList;
         // 这里可以考虑优化，避免使用 notifyDataSetChanged
         notifyDataSetChanged();
@@ -30,7 +31,7 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
-        DataForm.File data = dataList.get(position);
+        Data.File data = dataList.get(position);
         String name = data.getName();
 
         if (name.equals("..")) {

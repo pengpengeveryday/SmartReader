@@ -1,8 +1,8 @@
 package com.peng.un.action;
 
-import com.peng.un.data.DataForm;
+import com.peng.un.data.Data;
 import com.peng.un.data.Settings;
-import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -11,7 +11,7 @@ import java.util.List;
 public class PathExplore {
     // 单例实例
     private static PathExplore instance;
-    private DataForm.File currentFolder;
+    private Data.File currentFolder;
 
     // 私有构造函数
     private PathExplore() {
@@ -23,7 +23,7 @@ public class PathExplore {
         if (!path.exists() || !path.isDirectory()) {
             path = new java.io.File("/");
         }
-        currentFolder = new DataForm.File(path.getName(), path.getAbsolutePath(), true);
+        currentFolder = new Data.File(path.getName(), path.getAbsolutePath(), true);
     }
 
     // 静态方法获取单例实例
@@ -34,7 +34,7 @@ public class PathExplore {
         return instance;
     }
 
-    public List<DataForm.File> listFiles() {
+    public List<Data.File> listFiles() {
         java.io.File currentFile = new java.io.File(currentFolder.getPath());
         java.io.File[] files = currentFile.listFiles();
         if (files == null) {
@@ -56,9 +56,9 @@ public class PathExplore {
             sortedFiles.add(0, currentFile.getParentFile());
         }
 
-        List<DataForm.File> dataList = new ArrayList<>();
+        List<Data.File> dataList = new ArrayList<>();
         for (java.io.File file : sortedFiles) {
-            dataList.add(new DataForm.File(file.getName(), file.getAbsolutePath(), file.isDirectory()));
+            dataList.add(new Data.File(file.getName(), file.getAbsolutePath(), file.isDirectory()));
         }
 
         return dataList;
@@ -68,13 +68,13 @@ public class PathExplore {
         if (path == null || !path.exists() || !path.isDirectory()) {
             return false;
         }
-        currentFolder = new DataForm.File(path.getName(), path.getAbsolutePath(), true);
+        currentFolder = new Data.File(path.getName(), path.getAbsolutePath(), true);
         // 导航成功后保存当前路径
         Settings.instance(null).saveLastPath(path.getAbsolutePath());
         return true;
     }
 
-    public DataForm.File getCurrentFolder() {
+    public Data.File getCurrentFolder() {
         return currentFolder;
     }
 
