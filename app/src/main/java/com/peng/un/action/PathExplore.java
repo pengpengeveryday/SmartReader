@@ -1,6 +1,7 @@
 package com.peng.un.action;
 
 import com.peng.un.data.Data;
+import com.peng.un.data.EPub;
 import com.peng.un.data.Settings;
 import com.peng.un.utils.ALog;
 
@@ -58,7 +59,13 @@ public class PathExplore {
 
     List<Data.File> dataList = new ArrayList<>();
     for (java.io.File file : sortedFiles) {
-      dataList.add(new Data.File(file.getName(), file.getAbsolutePath(), file.isDirectory()));
+      if (file.getName().toLowerCase().endsWith(".epub")) {
+        // 如果是 .epub 文件，构造 EPub 类型的数据
+        dataList.add(new EPub(file.getName(), file.getAbsolutePath()));
+      } else {
+        // 其他文件，构造 Data.File 类型的数据
+        dataList.add(new Data.File(file.getName(), file.getAbsolutePath(), file.isDirectory()));
+      }
     }
 
     ALog.d("PathExplore: Returning " + dataList.size() + " items");

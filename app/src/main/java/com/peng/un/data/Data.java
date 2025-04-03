@@ -2,7 +2,8 @@ package com.peng.un.data;
 
 public class Data {
   public enum Type {
-    FILE
+    FILE,
+    EPUB
   }
 
   private Type type;
@@ -24,11 +25,14 @@ public class Data {
     private String path;
     private boolean folder; // 新增变量
 
-    public File(String name, String path, boolean folder) {
-      super(Type.FILE);
+    public File(Type type, String name, String path, boolean folder) {
+      super(type);
       this.name = name;
       this.path = path;
       this.folder = folder; // 构造函数中初始化
+    }
+    public File(String name, String path, boolean folder) {
+      this(Type.FILE, name, path, folder);
     }
 
     public String getName() {

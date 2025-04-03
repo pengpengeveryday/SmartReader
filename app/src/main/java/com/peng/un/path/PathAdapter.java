@@ -44,17 +44,12 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
     Data.File data = dataList.get(position);
     String name = data.getName();
 
-    if (name.equals("..")) {
-      holder.textView.setText("↩ 返回上级目录");
-      holder.textView.setCompoundDrawablesWithIntrinsicBounds(
-        R.drawable.ic_folder, 0, 0, 0);
-      return;
-    }
-
     holder.textView.setText(name);
-    holder.textView.setCompoundDrawablesWithIntrinsicBounds(
-      data.isFolder() ? R.drawable.ic_folder : R.drawable.ic_file,
-      0, 0, 0);
+    int id = data.isFolder()? R.drawable.ic_folder : R.drawable.ic_file;
+    if (data.getType() == Data.Type.EPUB) {
+      id = R.drawable.ic_epub;
+    }
+    holder.textView.setCompoundDrawablesWithIntrinsicBounds(id,0, 0, 0);
 
     holder.itemView.setOnClickListener(v -> {
       if (data.isFolder()) {
