@@ -24,6 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- 新增的 EnumChaptersActivity -->
+        <activity
+            android:name=".epub.EnumChaptersActivity"
+            android:exported="false">
+            <!-- 可以在这里添加 intent-filter 来定义启动方式 -->
+        </activity>
     </application>
 
 </manifest>

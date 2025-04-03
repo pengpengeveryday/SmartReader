@@ -1,5 +1,6 @@
 package com.peng.un.path;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.peng.un.R;
 import com.peng.un.action.PathExplore;
 import com.peng.un.data.Data;
 import com.peng.un.data.Settings;
+import com.peng.un.epub.EnumChaptersActivity;
 
 import java.util.Collections;
 import java.util.List;
@@ -62,9 +64,17 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
             "无法访问该文件夹", Toast.LENGTH_SHORT).show();
         }
       } else {
-        // 这里需要传入 PathActivity 的上下文
-        Toast.makeText(pathActivity,
-          "文件: " + data.getName(), Toast.LENGTH_SHORT).show();
+        if (data.getType() == Data.Type.EPUB) {
+          // 创建 Intent 跳转到 EnumChaptersActivity
+          Intent intent = new Intent(pathActivity, EnumChaptersActivity.class);
+          // 可以传递 EPUB 文件的路径到 EnumChaptersActivity
+          intent.putExtra("epubFilePath", data.getPath());
+          pathActivity.startActivity(intent);
+        } else {
+          // 这里需要传入 PathActivity 的上下文
+          Toast.makeText(pathActivity,
+                  "文件: " + data.getName(), Toast.LENGTH_SHORT).show();
+        }
       }
     });
   }
