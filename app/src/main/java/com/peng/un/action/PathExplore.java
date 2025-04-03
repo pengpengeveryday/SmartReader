@@ -56,11 +56,6 @@ public class PathExplore {
       ALog.e("PathExplore: listFiles() returned null for path: " + currentFolder.getPath());
     }
 
-    // 如果不是根目录，添加返回上级目录的选项
-    if (!isRootPath()) {
-      sortedFiles.add(0, currentFile.getParentFile());
-    }
-
     List<Data.File> dataList = new ArrayList<>();
     for (java.io.File file : sortedFiles) {
       dataList.add(new Data.File(file.getName(), file.getAbsolutePath(), file.isDirectory()));
@@ -101,5 +96,19 @@ public class PathExplore {
    */
   public String getPathName() {
     return currentFolder.getName();
+  }
+
+  public boolean goBack() {
+    java.io.File currentFile = new java.io.File(currentFolder.getPath());
+    java.io.File parentFile = currentFile.getParentFile();
+    if (parentFile != null && parentFile.exists() && parentFile.isDirectory()) {
+      currentFolder = new Data.File(parentFile.getName(), parentFile.getAbsolutePath(), true);
+      // 导航成功后保存当前路径
+      Settings.instance(null).saveLastPath(parentFile.getAbsolutePath());
+      ALog.d("PathExplore: Navigated back to: " + parentFile.getAbsolutePath());
+      return true;
+    }
+    ALog.e("PathExplore: Cannot go back from path: " + currentFolder.getPath());
+    return false;
   }
 }

@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Settings;
+import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -121,6 +122,18 @@ public class PathActivity extends AppCompatActivity {
         finish();
       }
     }
+  }
+
+  @Override
+  public boolean onKeyUp(int keyCode, KeyEvent event) {
+    if (keyCode == KeyEvent.KEYCODE_BACK) {
+      // 处理返回键逻辑
+      if (PathExplore.instance().goBack()) {
+        updateFileList();
+        return true; // 消费事件
+      }
+    }
+    return super.onKeyUp(keyCode, event);
   }
 
   /**
