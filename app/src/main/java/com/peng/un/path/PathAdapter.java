@@ -18,6 +18,12 @@ import java.util.List;
 
 public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder> {
   private List<Data.File> dataList = Collections.emptyList();
+  private PathActivity pathActivity; // 添加 PathActivity 的引用
+
+  // 修改构造函数，接收 PathActivity 实例
+  public PathAdapter(PathActivity pathActivity) {
+    this.pathActivity = pathActivity;
+  }
 
   public void setData(List<Data.File> dataList) {
     this.dataList = dataList;
@@ -51,29 +57,18 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
       0, 0, 0);
 
     holder.itemView.setOnClickListener(v -> {
-      if (name.equals("..")) {
-        java.io.File parentFile = new java.io.File(data.getPath()).getParentFile();
-        // 这里需要在 PathActivity 中添加一个方法来处理导航逻辑
-        // pathExplore.navigateTo(parentFile);
-        // updateFileList();
-        return;
-      }
-
       if (data.isFolder()) {
         java.io.File folderFile = new java.io.File(data.getPath());
         // 这里需要在 PathActivity 中添加一个方法来处理导航逻辑
         if (PathExplore.instance().navigateTo(folderFile)) {
-          // 获取文件列表
-          List<Data.File> dataList = PathExplore.instance().listFiles();
-          // 更新适配器数据
-          setData(dataList);
+          pathActivity.updateFileList();
         } else {
-          Toast.makeText(Settings.instance().context,
+          Toast.makeText(pathActivity,
             "无法访问该文件夹", Toast.LENGTH_SHORT).show();
         }
       } else {
         // 这里需要传入 PathActivity 的上下文
-        Toast.makeText(Settings.instance().context,
+        Toast.makeText(pathActivity,
           "文件: " + data.getName(), Toast.LENGTH_SHORT).show();
       }
     });

@@ -2,6 +2,7 @@ package com.peng.un.action;
 
 import com.peng.un.data.Data;
 import com.peng.un.data.Settings;
+import com.peng.un.utils.ALog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class PathExplore {
 
   // 私有构造函数
   private PathExplore() {
-    String initialPath = "/sdcard";//Settings.instance().getLastPath();
+    String initialPath = Settings.instance().getLastPath();
     java.io.File path = new java.io.File(initialPath);
     currentFolder = new Data.File(path.getName(), path.getAbsolutePath(), true);
   }
@@ -31,7 +32,8 @@ public class PathExplore {
   public List<Data.File> listFiles() {
     java.io.File currentFile = new java.io.File(currentFolder.getPath());
     java.io.File[] files = currentFile.listFiles();
-    if (files == null) {
+    if (files == null || files.length == 0) {
+      ALog.e("PathExplore  No files found in " + currentFolder.getPath());
       return Collections.emptyList();
     }
 
@@ -78,5 +80,14 @@ public class PathExplore {
 
   public static boolean isParentDirectory(java.io.File file) {
     return file.getName().equals("..");
+  }
+
+  /**
+   * 获取当前文件夹的名称
+   *
+   * @return 当前文件夹的名称
+   */
+  public String getPathName() {
+    return currentFolder.getName();
   }
 }

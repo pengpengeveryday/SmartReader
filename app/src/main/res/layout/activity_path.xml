@@ -4,17 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/tvCurrentPath"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:padding="16dp"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:ellipsize="start"
-        android:singleLine="true" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

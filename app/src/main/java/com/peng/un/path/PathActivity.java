@@ -22,7 +22,6 @@ public class PathActivity extends AppCompatActivity {
   private static final int PERMISSION_REQUEST_CODE = 1;
   private RecyclerView recyclerView;
   private PathAdapter adapter;
-  private TextView tvCurrentPath;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +29,12 @@ public class PathActivity extends AppCompatActivity {
     setContentView(R.layout.activity_path);
     ALog.d("PathActivity onCreate");
 
-    // 初始化视图组件
-    tvCurrentPath = findViewById(R.id.tvCurrentPath);
     recyclerView = findViewById(R.id.recyclerView);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    // 初始化适配器
-    adapter = new PathAdapter();
+    // 创建 PathAdapter 实例时传入 this 引用
+    adapter = new PathAdapter(this);
+    recyclerView.setAdapter(adapter);
     recyclerView.setAdapter(adapter);
 
     // 检查权限并浏览文件
@@ -86,10 +84,13 @@ public class PathActivity extends AppCompatActivity {
   /**
    * 更新文件列表
    */
-  private void updateFileList() {
+  protected void updateFileList() {
     try {
-      // 更新当前路径显示
-      tvCurrentPath.setText(PathExplore.instance().getCurrentFolder().getPath());
+      // 获取当前文件夹的名称
+      String pathName = PathExplore.instance().getPathName();
+      // 更新 Activity 的标题为当前文件夹的名称
+      setTitle(pathName);
+
       // 获取文件列表
       List<Data.File> dataList = PathExplore.instance().listFiles();
       // 更新适配器数据
