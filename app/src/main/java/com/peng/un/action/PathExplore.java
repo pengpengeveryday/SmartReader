@@ -14,12 +14,16 @@ public class PathExplore {
   // 单例实例
   private static PathExplore instance;
   private Data.File currentFolder;
+  // 新增 currentFile 变量
+  private Data.File currentFile;
 
   // 私有构造函数
   private PathExplore() {
     String initialPath = Settings.instance().getLastPath();
     java.io.File path = new java.io.File(initialPath);
     currentFolder = new Data.File(path.getName(), path.getAbsolutePath(), true);
+    // 初始化 currentFile 为 null
+    currentFile = null;
   }
 
   // 静态方法获取单例实例
@@ -82,6 +86,14 @@ public class PathExplore {
     Settings.instance(null).saveLastPath(path.getAbsolutePath());
     ALog.d("PathExplore: Navigated to: " + path.getAbsolutePath());
     return true;
+  }
+
+  public void selectFile(Data.File file) {
+    this.currentFile = file;
+  }
+
+  public Data.File getSelectFile() {
+    return this.currentFile;
   }
 
   public Data.File getCurrentFolder() {

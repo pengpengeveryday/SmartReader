@@ -65,10 +65,9 @@ public class PathAdapter extends RecyclerView.Adapter<PathAdapter.DataViewHolder
         }
       } else {
         if (data.getType() == Data.Type.EPUB) {
+          PathExplore.instance().selectFile(data);
           // 创建 Intent 跳转到 EnumChaptersActivity
           Intent intent = new Intent(pathActivity, EnumChaptersActivity.class);
-          // 可以传递 EPUB 文件的路径到 EnumChaptersActivity
-          intent.putExtra("epubFilePath", data.getPath());
           pathActivity.startActivity(intent);
         } else {
           // 这里需要传入 PathActivity 的上下文
