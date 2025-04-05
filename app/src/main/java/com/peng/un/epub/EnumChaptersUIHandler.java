@@ -29,7 +29,7 @@ public class EnumChaptersUIHandler extends Handler implements EnumChaptersHandle
   public void handleMessage(@NonNull Message msg) {
     EVENT event = EVENT.values()[msg.what];
     if (event == EVENT.ChaptersUpdate) {
-      adapter.notifyDataSetChanged();
+      adapter.updateData();
     }
   }
 }

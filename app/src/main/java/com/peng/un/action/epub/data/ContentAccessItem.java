@@ -12,7 +12,7 @@ public class ContentAccessItem {
   private final Elements children;
   public Element content = null;
   private ArrayList<ContentAccessItem> subItems = new ArrayList<>();
-  public int accessState = -1;
+  public boolean fold = false;
   public ContentAccessItem copy() {
     return new ContentAccessItem(element, depth);
   }
@@ -31,16 +31,7 @@ public class ContentAccessItem {
     else { text = element.text(); }
   }
   public boolean hasContent() { return content != null; }
-  public String text() { return text; }
   public ArrayList<ContentAccessItem>subItems() { return subItems; }
-  public ArrayList<ContentAccessItem> cutLastItems(int count) {
-    ArrayList<ContentAccessItem> result = new ArrayList<>();
-    while (subItems.size() > 0 && count > 0) {
-      result.add(0, subItems.remove(subItems.size()-1));
-      count--;
-    }
-    return result;
-  }
   public Elements children() {
     return children;
   }

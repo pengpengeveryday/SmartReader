@@ -50,7 +50,7 @@ public class ParseMainEntries {
   private void addNavPoints(List<ContentAccessItem> chapters, Elements divs, int depth) {
     for (int i = 0; i < divs.size(); i++) {
       ContentAccessItem item = new ContentAccessItem(divs.get(i), depth);
-      if (item.hasContent() && item.text().length() > 0) {
+      if (item.hasContent() && item.text.length() > 0) {
         chapters.add(item);
       }
       addNavPoints(chapters, item.children(), depth + 1);

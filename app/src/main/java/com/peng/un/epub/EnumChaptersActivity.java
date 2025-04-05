@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.peng.un.R;
@@ -22,21 +23,15 @@ public class EnumChaptersActivity extends AppCompatActivity {
     setContentView(R.layout.activity_enum_chapters);
 
     // 初始化视图
-    RecyclerView chaptersRecyclerView = findViewById(R.id.chapters_recyclerview);
-    TextView titleTextView = findViewById(R.id.book_title);
-
-    EnumChaptersAdapter adapter = new EnumChaptersAdapter();
-    chaptersRecyclerView.setAdapter(adapter);
+    ListView listView = findViewById(R.id.vl_category);
+    EnumChaptersAdapter adapter = new EnumChaptersAdapter(this);
+    listView.setAdapter(adapter);
     EnumChaptersUIHandler enumChaptersUIHandler = new EnumChaptersUIHandler(this, adapter);
     EnumChaptersHandler enumChaptersHandler = new EnumChaptersHandler();
     enumChaptersHandler.addCallback(enumChaptersUIHandler);
 
+
     // 加载章节列表
     enumChaptersHandler.loadEPub();
-
-    // 设置列表点击事件
-    chaptersRecyclerView.addOnItemTouchListener(new RecyclerView.SimpleOnItemTouchListener() {
-      // 这里可以实现点击事件处理逻辑
-    });
   }
 }
