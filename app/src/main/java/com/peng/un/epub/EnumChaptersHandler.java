@@ -3,6 +3,9 @@ package com.peng.un.epub;
 import android.os.Handler;
 import android.os.Message;
 
+import com.peng.un.action.PathExplore;
+import com.peng.un.action.epub.EPubExplore;
+import com.peng.un.data.EPub;
 import com.peng.un.utils.ALog;
 import com.peng.un.utils.MessageQueue;
 
@@ -56,5 +59,7 @@ public class EnumChaptersHandler implements MessageQueue.MessageCallback {
 
   void onLoadEPub() {
     ALog.d("EnumChaptersHandler: onLoadEPub");
+    EPub epub = (EPub) PathExplore.instance().getSelectFile();
+    EPubExplore.instance().load(epub);
   }
 }
