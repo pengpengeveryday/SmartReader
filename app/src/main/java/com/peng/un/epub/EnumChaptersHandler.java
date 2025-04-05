@@ -14,7 +14,7 @@ import java.util.List;
 
 public class EnumChaptersHandler implements MessageQueue.MessageCallback {
   public interface EnumChaptersCallback {
-
+    void onChaptersUpdate();
   }
 
   private final List<EnumChaptersCallback> mCallbacks = new ArrayList<>();
@@ -61,5 +61,8 @@ public class EnumChaptersHandler implements MessageQueue.MessageCallback {
     ALog.d("EnumChaptersHandler: onLoadEPub");
     EPub epub = (EPub) PathExplore.instance().getSelectFile();
     EPubExplore.instance().load(epub);
+    for (EnumChaptersCallback callback : mCallbacks) {
+      callback.onChaptersUpdate();
+    }
   }
 }

@@ -33,6 +33,10 @@ public class EPubExplore {
     chapters.clear();
   }
 
+  public ArrayList<ContentAccessItem> chapters() {
+    return chapters;
+  }
+
   public void load(EPub epub) {
     close();
     this.epub = epub;

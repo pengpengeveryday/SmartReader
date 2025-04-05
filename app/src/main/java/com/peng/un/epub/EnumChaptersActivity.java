@@ -15,11 +15,6 @@ import com.peng.un.R;
 import java.util.List;
 
 public class EnumChaptersActivity extends AppCompatActivity {
-  private RecyclerView chaptersRecyclerView;;
-  private TextView titleTextView;
-  private List<String> chapterTitles;
-  private String epubPath;
-  private final EnumChaptersHandler enumChaptersHandler = new EnumChaptersHandler();
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,14 +22,14 @@ public class EnumChaptersActivity extends AppCompatActivity {
     setContentView(R.layout.activity_enum_chapters);
 
     // 初始化视图
-    chaptersRecyclerView = findViewById(R.id.chapters_recyclerview);
-    titleTextView = findViewById(R.id.book_title);
-
-    // 获取传入的epub文件路径
-    epubPath = getIntent().getStringExtra("epub_path");
+    RecyclerView chaptersRecyclerView = findViewById(R.id.chapters_recyclerview);
+    TextView titleTextView = findViewById(R.id.book_title);
 
     EnumChaptersAdapter adapter = new EnumChaptersAdapter();
     chaptersRecyclerView.setAdapter(adapter);
+    EnumChaptersUIHandler enumChaptersUIHandler = new EnumChaptersUIHandler(this, adapter);
+    EnumChaptersHandler enumChaptersHandler = new EnumChaptersHandler();
+    enumChaptersHandler.addCallback(enumChaptersUIHandler);
 
     // 加载章节列表
     enumChaptersHandler.loadEPub();
